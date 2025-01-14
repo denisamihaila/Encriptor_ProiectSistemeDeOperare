@@ -1,0 +1,1 @@
+# Encriptor_ProiectSistemeDeOperare
