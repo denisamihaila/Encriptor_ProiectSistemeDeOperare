@@ -5,7 +5,7 @@
  Să se implementeze un encriptor/decriptor care primește un fișier de intrare cu diferite cuvinte. Programul mapează fișierul de intrare în memorie și pornește mai multe procese care vor aplica o permutare random pentru fiecare cuvânt. Permutările vor fi scrise într-un fișier de ieșire. Programul poate primi ca argument doar fișierul de intrare, în acest caz va face criptarea cuvintelor; sau va primi fișierul având cuvintele criptate și permutările folosite pentru criptare, caz în care va genera fișierul de output având cuvintele decriptate.
 
 
-Implementare
+## Implementare
 
 ```c
 #include <stdio.h>
