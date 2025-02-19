@@ -58,14 +58,14 @@ Command:
 
 Example Input File (input.txt):
 
-```nginx
+```bash
 apple
 banana
 cherry
 ```
 Example Output File (output.txt):
 
-```nginx
+```bash
 lpeap
 3 4 2 0 1 
 aaabnn
@@ -88,7 +88,7 @@ Command:
 
 Example Input File (input.txt):
 
-```nginx
+```bash
 lpeap
 3 4 2 0 1 
 aaabnn
@@ -98,7 +98,7 @@ rrcehy
 ```
 Example Output File (output.txt):
 
-```nginx
+```bash
 apple
 banana
 cherry
