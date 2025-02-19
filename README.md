@@ -1,11 +1,110 @@
-# Encriptor_ProiectSistemeDeOperare
+# Encriptor – Operating Systems Project
 
-## Cerință
+## Overview
 
- Să se implementeze un encriptor/decriptor care primește un fișier de intrare cu diferite cuvinte. Programul mapează fișierul de intrare în memorie și pornește mai multe procese care vor aplica o permutare random pentru fiecare cuvânt. Permutările vor fi scrise într-un fișier de ieșire. Programul poate primi ca argument doar fișierul de intrare, în acest caz va face criptarea cuvintelor; sau va primi fișierul având cuvintele criptate și permutările folosite pentru criptare, caz în care va genera fișierul de output având cuvintele decriptate.
+Encriptor is a command-line tool designed as an operating systems project that can both encrypt and decrypt words. The program reads an input file containing words, maps the file into shared memory, and spawns multiple processes to work on different subsets of the data concurrently. Each process applies a random permutation to each word using the Fisher–Yates shuffle algorithm for encryption, or reverses the permutation for decryption. The results are then written to an output file.
 
+The tool supports two modes:
+- **Encryption Mode:** Processes an input file containing plain words (one per line), encrypts each word by applying a random permutation, and writes the encrypted word along with its permutation to the output file.
+- **Decryption Mode:** Processes an input file containing pairs of lines (an encrypted word followed by its permutation), decrypts the word by inverting the permutation, and writes the original word to the output file.
 
-## Implementare
+## Features
+
+- **Parallel Processing:** Utilizes multiple processes (via `fork()`) to handle subsets of the input simultaneously.
+- **Shared Memory:** Uses `mmap` to allocate a shared memory segment that holds the data structures accessed by all processes.
+- **Random Permutations:** Implements the Fisher–Yates shuffle to generate random permutations for encrypting words.
+- **Dual Mode Operation:** Supports both encryption and decryption based on command-line arguments.
+
+## Requirements
+
+- A POSIX-compliant operating system (e.g., Linux).
+- A C compiler (e.g., `gcc`).
+- Standard C libraries:
+  - `stdio.h`
+  - `stdlib.h`
+  - `string.h`
+  - `unistd.h`
+  - `sys/wait.h`
+  - `sys/mman.h`
+  - `fcntl.h`
+  - `time.h`
+
+## Building the Project
+
+1. **Clone or Download the Repository**  
+   Ensure that you have the source file (e.g., `encriptor.c`) in your working directory.
+
+2. **Compile the Code**  
+   Use a C compiler to build the project. For example:
+   ```bash
+   gcc -o encriptor encriptor.c
+   ```
+## Usage
+
+The program requires three command-line arguments:
+
+- The mode of operation: either encrypt or decrypt.
+- The input file path.
+- The output file path.
+  
+### Encryption Mode
+When run in encryption mode, the input file should contain one plain word per line. The program will output the encrypted word followed by a line containing the permutation indices used.
+
+Command:
+
+```bash
+./encriptor encrypt input.txt output.txt
+```
+
+Example Input File (input.txt):
+
+```nginx
+apple
+banana
+cherry
+```
+Example Output File (output.txt):
+
+```nginx
+lpeap
+3 4 2 0 1 
+aaabnn
+2 3 4 1 5 0 
+rrcehy
+4 5 3 0 1 2 
+```
+
+### Decryption Mode
+In decryption mode, the input file should contain pairs of lines:
+
+- The first line is the encrypted word.
+- The second line contains the permutation indices used during encryption.
+
+Command:
+
+```bash
+./encriptor decrypt encrypted_input.txt decrypted_output.txt
+```
+
+Example Input File (input.txt):
+
+```nginx
+lpeap
+3 4 2 0 1 
+aaabnn
+2 3 4 1 5 0 
+rrcehy
+4 5 3 0 1 2 
+```
+Example Output File (output.txt):
+
+```nginx
+apple
+banana
+cherry
+```
+  
+## Implementation
 
 ```c
 #include <stdio.h>
